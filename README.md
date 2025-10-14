@@ -41,3 +41,5 @@ We would like to thank former teaching assistants for their contributions to the
 * [Hongqiao Zhang](https://github.com/zhanghq2) @ CAS4ET of ShanghaiTech SIST
 * [Yutao Gong](https://github.com/gongyt1112) @ CAS4ET of ShanghaiTech SIST
 * Heng Shi @ CAS4ET of ShanghaiTech SIST
+* [Zhaojun Ni](https://github.com/RealJustinNi) @ CAS4ET of ShanghaiTech SIST
+* Zhengkun Yu @ CAS4ET of ShanghaiTech SIST
