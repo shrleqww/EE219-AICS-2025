@@ -79,6 +79,7 @@ def modify_testbench():
     testbench[6] = '`define DEBUG ' + str(DEBUG)
 
     f_testbench.seek(0)
+    f_testbench.truncate()
     f_testbench.write("\n".join(testbench))
     f_testbench.close()
 
