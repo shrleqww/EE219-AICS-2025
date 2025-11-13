@@ -521,6 +521,8 @@ The formats of relative instructions are shown below.
 
 > HINT: Finish the modules under /src/vsrc/components/two_issue and /src/vsrc/rvcpu/rvcpu_two_issue.v.
 
+> Set `vid_wb_from_rs1` to 1 when `vmv.v.x` inst is activated.
+
 ### Task2.2 - Assembly Code 2
 
 Vector processors can handle [MAC](#lab-goals) operations more efficiently. Now, use the vector instructions to do this operation.
