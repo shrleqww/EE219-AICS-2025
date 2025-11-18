@@ -367,7 +367,7 @@ The `unit-stride` operation accesses consecutive elements stored in memory start
 
 The `strided` operation accesses the first memory element at the base effective address, and then accesses subsequent elements at the address increment given by the byte offset contained in the x register specified by rs2.
 
-The `indexed` operation adds the vector offset specified by rs2 to the base effective address to obtain the effective address of each element.
+The `indexed` operation adds the vector offset specified by vs2 to the base effective address to obtain the effective address of each element.
 
 The following images describe the format of the access command and its specific meaning.
 
