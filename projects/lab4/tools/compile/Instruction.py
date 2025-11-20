@@ -147,7 +147,11 @@ def InstructionGen_B(opcode, funct3, rs1, rs2, imm):
 
 def InstructionGen_U(opcode, rd, imm):
     inst = ''
-    inst = inst + imm[0:20] + rd + opcode 
+    # if opcode == '0110111':
+    if opcode == '0110111' or opcode == '0010111':
+        inst = inst + imm[12:32] + rd + opcode 
+    else:
+        inst = inst + imm[0:20] + rd + opcode 
     return inst
 
 def InstructionGen_J(opcode, rd, imm):

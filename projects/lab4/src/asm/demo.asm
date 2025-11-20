@@ -4,7 +4,7 @@
 
 ; load matrix_A base-address 0x80100000 to the register x5 
 ; ( the immediate number is already shifted 12-bits here )
-lui     x5,     2148532224          ; x5 = 0x80100000
+lui     x5,     524544          ; x5 = 0x80100000
 
 addi    x6,     x5,     4           ; x6  = x5+4
 lw      x7,     0(x5)               ; x7  = A[0][0]
