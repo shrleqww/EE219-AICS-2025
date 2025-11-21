@@ -539,13 +539,13 @@ Enable the processor to support more instructions required for Softmax operation
 | ----- | -----------  | ------ | ----- | ------------------------    | -----------------------                                   |
 | OPIVV | `vmin.vv`    | 000101 | 000   | vmin.vv vd, vs2, vs1, vm    | vd[i] = min( vs2[i], vs1[i] )                             |
 | OPIVX | `vmin.vx`    | 000101 | 100   | vmin.vx vd, vs2, rs1, vm    | vd[i] = min( vs2[i], x[rs1] )                             |
-| OPIVI | `vmax.vv`    | 000111 | 000   | vmax.vv vd, vs2, vs1, vm    | vd[i] = max( vs2[i], vs1[i] )                             |
-| OPIVV | `vmax.vx`    | 000111 | 100   | vmax.vx vd, vs2, rs1, vm    | vd[i] = max( vs2[i], x[rs1] )                             |
-| OPIVX | `vsra.vv`    | 101001 | 000   | vsra.vv vd, vs2, vs1, vm    | vd[i] = vs2[i] >>> vs1[i]                                 |
-| OPMVV | `vsra.vx`    | 101001 | 100   | vsra.vx vd, vs2, rs1, vm    | vd[i] = vs2[i] >>> x[rs1]                                 |
-| OPMVX | `vsra.vi`    | 101001 | 011   | vsra.vi vd, vs2, uimm, vm   | vd[i] = vs2[i] >>> uimm                                   |
+| OPIVV | `vmax.vv`    | 000111 | 000   | vmax.vv vd, vs2, vs1, vm    | vd[i] = max( vs2[i], vs1[i] )                             |
+| OPIVX | `vmax.vx`    | 000111 | 100   | vmax.vx vd, vs2, rs1, vm    | vd[i] = max( vs2[i], x[rs1] )                             |
+| OPIVV | `vsra.vv`    | 101001 | 000   | vsra.vv vd, vs2, vs1, vm    | vd[i] = vs2[i] >>> vs1[i]                                 |
+| OPIVX | `vsra.vx`    | 101001 | 100   | vsra.vx vd, vs2, rs1, vm    | vd[i] = vs2[i] >>> x[rs1]                                 |
+| OPIVI | `vsra.vi`    | 101001 | 011   | vsra.vi vd, vs2, uimm, vm   | vd[i] = vs2[i] >>> uimm                                   |
 | OPMVV | `vredsum.vs` | 000000 | 010   | vredsum.vs vd, vs2, vs1, vm | vd[0] = sum( vs1[0], vs2[0], vs2[1], vs2[2]..., vs2[-1] ) |
-| OPMVX | `vredmax.vs` | 000111 | 010   | vredmax.vs vd, vs2, vs1, vm | vd[0] = max( vs1[0], vs2[0], vs2[1], vs2[2]..., vs2[-1] ) |
+| OPMVV | `vredmax.vs` | 000111 | 010   | vredmax.vs vd, vs2, vs1, vm | vd[0] = max( vs1[0], vs2[0], vs2[1], vs2[2]..., vs2[-1] ) |
 
 > HINT: Modify the modules under /src/vsrc/components/two_issue and /src/vsrc/rvcpu/rvcpu_two_issue.v (based on task 2).
 
