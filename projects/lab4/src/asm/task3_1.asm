@@ -60,36 +60,36 @@ nop                                     ; vse32.v     vx2,    x5,             1 
 addi        x5,     x5,     32          ; nop                                       ; 
 
 # Test for vsra.vv
-nop                                     ; vadd.vi     vx2,    vx0,   16,      1     ;
+nop                                     ; vadd.vi     vx2,    vx0,   15,      1     ;
 nop                                     ; vadd.vi     vx3,    vx0,    3,      1     ;
 nop                                     ; vsra.vv     vx2,    vx2,   vx3,     1     ;
-nop                                     ; vse32.v     vx2,    x5,             1     ;   mem[5][0:7]=2
+nop                                     ; vse32.v     vx2,    x5,             1     ;   mem[5][0:7]=1
 addi        x5,     x5,     32          ; nop                                       ; 
 
 # Test for vsra.vx
-nop                                     ; vadd.vi     vx2,    vx0,   16,      1     ;
+nop                                     ; vadd.vi     vx2,    vx0,   15,      1     ;
 addi        x7,     x0,     2           ; nop                                       ; 
 nop                                     ; vsra.vx     vx2,    vx2,    x7,     1     ;
-nop                                     ; vse32.v     vx2,    x5,             1     ;   mem[5][0:7]=4
+nop                                     ; vse32.v     vx2,    x5,             1     ;   mem[5][0:7]=3
 addi        x5,     x5,     32          ; nop                                       ; 
 
 # Test for vsra.vi
-nop                                     ; vadd.vi     vx2,    vx0,   16,      1     ;
+nop                                     ; vadd.vi     vx2,    vx0,   15,      1     ;
 nop                                     ; vsra.vi     vx2,    vx2,    2,      1     ;
-nop                                     ; vse32.v     vx2,    x5,             1     ;   mem[5][0:7]=4
+nop                                     ; vse32.v     vx2,    x5,             1     ;   mem[5][0:7]=3
 addi        x5,     x5,     32          ; nop                                       ; 
 
 # Test for vredsum.vs
-nop                                     ; vadd.vi     vx2,    vx0,   17,      1     ;
+nop                                     ; vadd.vi     vx2,    vx0,   15,      1     ;
 nop                                     ; vredsum.vs  vx3,    vx2,  vx0,      1     ;
-nop                                     ; vse32.v     vx3,    x5,             1     ;   mem[5][0:7]=17*8=136
+nop                                     ; vse32.v     vx3,    x5,             1     ;   mem[5][0:7]=15*8=120
 addi        x5,     x5,     32          ; nop                                       ; 
 
 # Test for vredmax.vs
-nop                                     ; vadd.vi     vx2,    vx0,   17,      1     ;
+nop                                     ; vadd.vi     vx2,    vx0,   15,      1     ;
 nop                                     ; vredsum.vs  vx3,    vx2,  vx0,      1     ;
 nop                                     ; vredmax.vs  vx4,    vx3,  vx0,      1     ;
-nop                                     ; vse32.v     vx4,    x5,             1     ;   mem[5][0:7]=17*8=136
+nop                                     ; vse32.v     vx4,    x5,             1     ;   mem[5][0:7]=15*8=120
 addi        x5,     x5,     32          ; nop                                       ; 
 
 halt                                    ; nop                                       ;

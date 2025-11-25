@@ -1,7 +1,7 @@
 import getopt
 import sys
 
-golden_result = [ 8, 9, 17, 26, 1, 2, 10, 7, 2, 4, 4, 136, 136 ]
+golden_result = [ 8, 9, 17, 26, 1, 2, 10, 7, 1, 3, 3, 120, 120 ]
 test_content = [ 'vadd.vi & vse32.v', 'vadd.vx', 'vadd.vv', 
                  'vle32.v', 'vmin.vv', 'vmin.vx', 'vmax.vv', 'vmax.vx', 'vsra.vv', 'vsra.vx', 'vsra.vi',
                  'vredsum.vs', 'vredmax.vs' ]
