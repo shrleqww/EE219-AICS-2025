@@ -170,7 +170,7 @@ If you implement accelerator in your design, you can get bonus:
 where **n** is your PE number.
 
 ## Submission
-Using the make command to export the git log file and pack up the `project` folder. You will get the compressed file `project.tar.gz` in `EE219-AICS-2024/projects`.
+Using the make command to export the git log file and pack up the `project` folder. You will get the compressed file `project.tar.gz` in `EE219-AICS-2025/projects`.
 ``` bash
 make pack
 ```
