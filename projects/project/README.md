@@ -180,3 +180,4 @@ Please compress `project.tar.gz` and the report into a `zip` file with the name 
 |-- report.pdf
 |-- project.tar.gz
 ```
+Please specify each group member’s contribution to this work at end of the report.
