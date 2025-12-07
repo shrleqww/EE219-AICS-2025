@@ -43,6 +43,8 @@ You can store and print the int32 values representing the results just like our 
 #### 3. Scale
 The result of `conv` and `fc1` should be divided by a scale to avoid data overflow. The address and data type of these two scales are described in [head file](./sw/include/model.h).
 
+> Note: It you have better idea when calculating `softmax`, you can change the code below `# ========== gen exp lut ==========` in projects/project/tool/gen_data.py. But remember that the hw style softmax golden result depends on it. Therefore please modify it carefully.
+
 
 ### Hardware-Platform
 Our hardware platform uses the RISC-V processor architecture and supports all RV64I instructions, along with some custom vector instructions. A single-cycle scalar processor core supporting RV64I has been implemented and is available for use.
