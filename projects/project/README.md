@@ -25,7 +25,7 @@ conv    | Convolutional   | 6x14x14 | 4x12x12 | int 8  | int 16 | int 8  |      
 pool    | Max pool        | 4x12x12 | 4x6x6   | int 16 | int 16 |        |        | None               
 fc1     | Fully-connected | 180     | 60      | int 16 | int 32 | int 16 |        | ReLU                  
 fc2     | Fully-connected | 60      | 10      | int 32 | int 32 | int 32 | int 32 | None                  
-softmax |                 | 10      | 10      | int 32 | int 32 |        |        | None                  
+softmax |                 | 10      | 10      | int 32 | Q16.16 |        |        | None                  
 
 
 You can refer to this [head file](./sw/include/model.h). If there is a need to cache the output results of intermediate layers, we also provide storage addresses for those in the same head file. You can change these output addresses if needed. Here are some reminders for your reference.
@@ -36,9 +36,11 @@ The activations and weights of the convolutional layer are four-dimensional tens
 
 #### 2. Data Type of Softmax
 Since our hardware platform only supports `Integer Instructions`, you can compute the softmax in a way similar to Lab 4.
-In the test script, we provide a function that simulates hardware execution and directly prints the int32 values representing the results. You can also refer to this function.
-You can store and print the int32 values representing the results just like our script does.
+In the test script, we provide a function that simulates hardware execution and directly prints the Q16.16 values representing the results. You can also refer to this function.
+You can store and print the Q16.16 values representing the results just like our script does.
 **As long as the overall trend of your results matches either the Python-computed results or the simulated hardware results in our test script, they will be considered correct.**
+
+> Reminder: The input data type is int32 and the output is Q16.16. Therefore you need to left-shift the input value by 16 bits first.
 
 #### 3. Scale
 The result of `conv` and `fc1` should be divided by a scale to avoid data overflow. The address and data type of these two scales are described in [head file](./sw/include/model.h).

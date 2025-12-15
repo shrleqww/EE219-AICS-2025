@@ -55,6 +55,8 @@ FC1_SC = 4
 FC2_IN = FC1_OUT
 FC2_OUT = 10
 
+LUT_SIZE = 256
+
 
 def write_at(mem: bytearray, addr: int, data_bytes: bytes):
     """Write data_bytes into mem beginning at physical addr."""
@@ -106,22 +108,39 @@ def softmax_float(x):
     return e / np.sum(e)
 
 def softmax_hw_style(x, lut):
-    x_max = x.max()
-    diff = x - x_max
+    Q = 16
+    Q_16 = 1 << Q
+    SAFE_SHIFT = 2
 
-    diff_sc = diff // 512
-    diff_sc = np.clip(diff_sc, -8, 0)
+    x = np.clip(x, -32767, 32767)
+    x = x.astype(np.int32) << 16
 
-    neg = -diff_sc
-    idx = (neg * 255) // 8
+    X_q16_16 = np.array(x, dtype=np.int32)
 
-    exp_i = lut[idx]
-    sum_e = exp_i.sum()
-    if sum_e == 0:
-        sum_e = 1
+    x_max = np.max(X_q16_16).astype(np.int32)
+    delta = (X_q16_16 - x_max).astype(np.int32)
+    delta = np.clip(delta, -8 * Q_16, 0).astype(np.int32)
 
-    out = (exp_i.astype(np.int64) * (1 << 16)) // sum_e
-    return out.astype(np.int32)
+    idx_num = (delta + 8 * Q_16).astype(np.int32) * (LUT_SIZE - 1)
+    idx     = (idx_num // (8 * Q_16) ).astype(np.int32)
+    idx     = np.clip(idx, 0, LUT_SIZE - 1).astype(np.int32)
+
+    exp_delta = lut[idx].astype(np.int32)
+
+    exp_sum = np.sum(exp_delta, dtype=np.int32).astype(np.int32)
+    if exp_sum <= 0:
+        exp_sum = 1
+
+    exp_delta_shr = (exp_delta >> SAFE_SHIFT).astype(np.int32)
+    exp_sum_shr   = int(exp_sum >> SAFE_SHIFT)
+    if exp_sum_shr <= 0:
+        exp_sum_shr = 1
+
+    num = (exp_delta_shr.astype(np.int32) * Q_16)
+    softmax_q16_16 = (num // exp_sum_shr).astype(np.int32)
+
+    softmax = softmax_q16_16.astype(np.float64) / Q_16
+    return softmax, softmax_q16_16
 
 
 
@@ -167,8 +186,8 @@ def main():
 
     # ========== gen exp lut ==========
     scale = (1 << 16)
-    t = np.linspace(0.0, 8.0, 256)
-    exp_f = np.exp(-t)
+    t = np.linspace(-8.0, 0.0, 256)
+    exp_f = np.exp(t)
     exp_lut = np.round(exp_f * scale).astype(np.int32)
     # =================================
 
@@ -237,17 +256,19 @@ def main():
 
     fc2_raw = (fc2_w.astype(np.int32) @ fc1_raw.astype(np.int32)) + fc2_b.astype(np.int32)
 
-    print("\n===== GOLDEN RESULT (INT32) =====")
-    print("\n===== FC2 RESULT ================")
+    print("\n===== GOLDEN RESULT (INT32) ===================================")
+    print("\n===== FC2 RESULT ==============================================")
     print(fc2_raw)
-    print("\n===== SOFTMAX RESULT ============")
+    print("\n===== ACCURATE SOFTMAX RESULT =================================")
     py_softmax = softmax_float(fc2_raw.astype(np.float64))
     print(py_softmax)
-    print("\n===== SOFTMAX RESULT ============")
-    sm_hw = softmax_hw_style(fc2_raw, exp_lut)
+    print("\n===== HARDWARE SOFTMAX RESULT =================================")
+    sm_hw, sm_q16_16 = softmax_hw_style(fc2_raw, exp_lut)
     print(sm_hw)
+    print("\n===== HARDWARE SOFTMAX RESULT (Q16.16) ========================")
+    print(sm_q16_16)
 
-    print("=================================\n")
+    print("===============================================================\n")
 
     # np.save(os.path.join(NPY_SAVE_PATH, "golden.npy"), fc2_raw)
 
